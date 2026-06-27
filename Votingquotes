@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Election Integrity Statements Archive — Brandy Breaks It Down</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a2e; --parchment: #f5f0e8; --parchment-dark: #e8e0d0;
+    --archival-red: #c0392b; --steel-blue: #2e6da4; --muted-gold: #8a6914;
+    --verified: #1a6b3c; --disputed: #c0392b; --unverified: #7a6200; --mixed: #5a3e8a;
+    --text-main: #1a1a2e; --text-secondary: #4a4a6a; --border: #c8c0b0;
+  }
+  body { background: var(--parchment); color: var(--text-main); font-family: 'Merriweather', Georgia, serif; font-size: 15px; line-height: 1.7; min-height: 100vh; }
+  .site-header { background: var(--ink); color: var(--parchment); border-bottom: 3px solid var(--archival-red); }
+  .header-inner { max-width: 1200px; margin: 0 auto; padding: 28px 24px 20px; display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+  .site-brand { font-family: 'Roboto Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--archival-red); margin-bottom: 4px; }
+  .site-title { font-family: 'Merriweather', serif; font-size: 26px; font-weight: 700; color: var(--parchment); line-height: 1.2; }
+  .header-meta { margin-left: auto; text-align: right; }
+  .header-meta p { font-family: 'Roboto Condensed', sans-serif; font-size: 12px; color: #9090b0; letter-spacing: 0.05em; }
+  .header-meta strong { color: var(--parchment); }
+  .archive-desc { background: #12122a; border-top: 1px solid #2a2a4a; }
+  .archive-desc-inner { max-width: 1200px; margin: 0 auto; padding: 14px 24px; font-family: 'Roboto Condensed', sans-serif; font-size: 13px; color: #9090b0; line-height: 1.5; }
+  .archive-desc-inner em { color: #c0c0d8; font-style: normal; }
+  .main-layout { max-width: 1200px; margin: 0 auto; padding: 28px 24px; display: grid; grid-template-columns: 260px 1fr; gap: 28px; align-items: start; }
+  .filter-rail { position: sticky; top: 20px; }
+  .filter-section { background: white; border: 1px solid var(--border); margin-bottom: 16px; border-radius: 2px; }
+  .filter-header { background: var(--ink); color: var(--parchment); font-family: 'Roboto Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 8px 14px; }
+  .filter-body { padding: 12px 14px; }
+  .search-input { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 2px; font-family: 'Roboto Mono', monospace; font-size: 12px; color: var(--text-main); background: var(--parchment); outline: none; transition: border-color 0.15s; }
+  .search-input:focus { border-color: var(--steel-blue); }
+  .search-input::placeholder { color: #9090a8; }
+  .filter-group { margin-bottom: 6px; }
+  .filter-group label { display: flex; align-items: center; gap: 8px; font-family: 'Roboto Condensed', sans-serif; font-size: 13px; color: var(--text-secondary); cursor: pointer; padding: 3px 0; user-select: none; }
+  .filter-group label:hover { color: var(--text-main); }
+  .filter-group input[type="checkbox"] { accent-color: var(--steel-blue); width: 14px; height: 14px; cursor: pointer; }
+  .party-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-R { background: #c0392b; } .dot-D { background: #2e6da4; } .dot-I { background: #6a4c93; }
+  .status-pip { display: inline-block; width: 8px; height: 8px; border-radius: 1px; flex-shrink: 0; }
+  .pip-verified { background: var(--verified); } .pip-disputed { background: var(--disputed); }
+  .pip-mixed { background: var(--mixed); } .pip-unverified { background: var(--unverified); }
+  .results-count { font-family: 'Roboto Condensed', sans-serif; font-size: 12px; color: var(--text-secondary); padding: 10px 14px; border-top: 1px solid var(--border); }
+  .results-count strong { color: var(--text-main); }
+  .clear-btn { width: 100%; padding: 8px; background: transparent; border: 1px solid var(--border); border-radius: 2px; font-family: 'Roboto Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
+  .clear-btn:hover { background: var(--ink); color: var(--parchment); border-color: var(--ink); }
+  .cards-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .sort-label { font-family: 'Roboto Condensed', sans-serif; font-size: 12px; color: var(--text-secondary); }
+  .sort-select { font-family: 'Roboto Condensed', sans-serif; font-size: 12px; padding: 5px 8px; border: 1px solid var(--border); background: white; color: var(--text-main); cursor: pointer; border-radius: 2px; }
+  .card { background: white; border: 1px solid var(--border); border-left: 4px solid var(--border); margin-bottom: 16px; border-radius: 2px; transition: box-shadow 0.15s; overflow: hidden; }
+  .card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .card.party-R { border-left-color: #c0392b; } .card.party-D { border-left-color: #2e6da4; } .card.party-I { border-left-color: #6a4c93; }
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 14px 16px 10px; gap: 12px; flex-wrap: wrap; }
+  .official-name { font-family: 'Roboto Condensed', sans-serif; font-weight: 700; font-size: 16px; color: var(--text-main); line-height: 1.2; }
+  .official-title { font-family: 'Roboto Condensed', sans-serif; font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .card-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+  .date-stamp { font-family: 'Roboto Mono', monospace; font-size: 11px; color: var(--text-secondary); letter-spacing: 0.05em; }
+  .status-stamp { font-family: 'Roboto Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; border: 1.5px solid; }
+  .stamp-verified { color: var(--verified); border-color: var(--verified); background: #f0fff4; }
+  .stamp-disputed { color: var(--disputed); border-color: var(--disputed); background: #fff5f5; }
+  .stamp-mixed { color: var(--mixed); border-color: var(--mixed); background: #f8f4ff; }
+  .stamp-unverified { color: var(--unverified); border-color: var(--unverified); background: #fffdf0; }
+  .card-quote { padding: 0 16px 12px; font-family: 'Merriweather', serif; font-size: 14px; font-style: italic; color: #2a2a3a; line-height: 1.75; border-bottom: 1px solid var(--parchment-dark); }
+  .card-quote::before { content: '\201C'; font-size: 20px; color: var(--border); vertical-align: -3px; margin-right: 3px; }
+  .card-quote::after { content: '\201D'; font-size: 20px; color: var(--border); vertical-align: -3px; margin-left: 3px; }
+  .card-footer { padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .topic-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-family: 'Roboto Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; background: var(--parchment-dark); color: var(--text-secondary); border-radius: 2px; }
+  .card-actions { display: flex; gap: 8px; }
+  .btn-sm { font-family: 'Roboto Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 2px; cursor: pointer; border: 1.5px solid; transition: all 0.15s; }
+  .btn-source { background: transparent; border-color: var(--border); color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .btn-source:hover { border-color: var(--steel-blue); color: var(--steel-blue); }
+  .btn-factcheck { background: var(--ink); border-color: var(--ink); color: var(--parchment); }
+  .btn-factcheck:hover { background: #2c2c50; }
+  .btn-factcheck:disabled { opacity: 0.5; cursor: not-allowed; }
+  .factcheck-panel { display: none; background: #f8f4ff; border-top: 2px solid var(--mixed); padding: 16px; font-family: 'Merriweather', serif; font-size: 13px; line-height: 1.8; color: var(--text-main); }
+  .factcheck-panel.open { display: block; }
+  .factcheck-panel.loading { display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-family: 'Roboto Condensed', sans-serif; font-size: 13px; }
+  .factcheck-header { font-family: 'Roboto Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mixed); margin-bottom: 10px; }
+  .factcheck-content p { margin-bottom: 10px; }
+  .factcheck-content p:last-child { margin-bottom: 0; }
+  .factcheck-sources { margin-top: 12px; padding-top: 10px; border-top: 1px solid #d0c8e8; font-family: 'Roboto Condensed', sans-serif; font-size: 11px; color: var(--text-secondary); }
+  .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--mixed); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-secondary); font-family: 'Roboto Condensed', sans-serif; }
+  .empty-state .empty-icon { font-size: 36px; margin-bottom: 14px; }
+  .empty-state h3 { font-size: 18px; margin-bottom: 8px; color: var(--text-main); }
+  .methodology { background: #12122a; color: #9090b0; padding: 20px 24px; font-family: 'Roboto Condensed', sans-serif; font-size: 12px; line-height: 1.7; }
+  .methodology-inner { max-width: 1200px; margin: 0 auto; }
+  .methodology strong { color: #c0c0d8; }
+  @media (max-width: 768px) { .main-layout { grid-template-columns: 1fr; } .filter-rail { position: static; } .header-meta { display: none; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div>
+      <div class="site-brand">Brandy Breaks It Down · Research Archive</div>
+      <h1 class="site-title">Election Integrity Statements<br>Public Record</h1>
+    </div>
+    <div class="header-meta">
+      <p>Updated <strong id="init-date"></strong></p>
+      <p>Sources: Congressional Record, C-SPAN, Official Press Releases, AP, NPR, PolitiFact</p>
+      <p>Primary sources only · No partisan interpretation</p>
+    </div>
+  </div>
+  <div class="archive-desc">
+    <div class="archive-desc-inner">
+      A chronological record of verified public statements by elected officials on mail voting, voter registration, turnout, and election integrity.
+      <em>All quotes are from primary or contemporaneously documented sources. Fact-check analysis is AI-assisted and cites empirical evidence.</em>
+    </div>
+  </div>
+</header>
+
+<div class="main-layout">
+  <aside class="filter-rail">
+    <div class="filter-section">
+      <div class="filter-header">Search Statements</div>
+      <div class="filter-body"><input type="text" class="search-input" id="search-input" placeholder="keyword, official, topic…"></div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-header">Party</div>
+      <div class="filter-body">
+        <div class="filter-group"><label><input type="checkbox" class="filter-party" value="R" checked><span class="party-dot dot-R"></span>Republican</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-party" value="D" checked><span class="party-dot dot-D"></span>Democrat</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-party" value="I" checked><span class="party-dot dot-I"></span>Independent</label></div>
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-header">Topic</div>
+      <div class="filter-body">
+        <div class="filter-group"><label><input type="checkbox" class="filter-topic" value="mail-voting" checked>Mail Voting</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-topic" value="voter-id" checked>Voter ID / DPOC</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-topic" value="noncitizen" checked>Non-Citizen Voting</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-topic" value="turnout" checked>Turnout / Registration</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-topic" value="integrity" checked>Election Integrity</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-topic" value="fraud" checked>Fraud Claims</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-topic" value="save-act" checked>SAVE Act / DPOC Law</label></div>
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-header">Evidentiary Status</div>
+      <div class="filter-body">
+        <div class="filter-group"><label><input type="checkbox" class="filter-status" value="verified" checked><span class="status-pip pip-verified"></span>Verified / Accurate</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-status" value="mixed" checked><span class="status-pip pip-mixed"></span>Partially Accurate</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-status" value="disputed" checked><span class="status-pip pip-disputed"></span>Disputed / Inaccurate</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-status" value="unverified" checked><span class="status-pip pip-unverified"></span>Unverified / Contested</label></div>
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-header">Year</div>
+      <div class="filter-body">
+        <div class="filter-group"><label><input type="checkbox" class="filter-year" value="2018" checked>2018</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-year" value="2020" checked>2020</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-year" value="2021" checked>2021</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-year" value="2022" checked>2022</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-year" value="2023" checked>2023</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-year" value="2024" checked>2024</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-year" value="2025" checked>2025</label></div>
+        <div class="filter-group"><label><input type="checkbox" class="filter-year" value="2026" checked>2026</label></div>
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="results-count"><strong id="result-count">—</strong> statements shown</div>
+      <div class="filter-body"><button class="clear-btn" id="clear-filters">Reset All Filters</button></div>
+    </div>
+  </aside>
+
+  <main class="cards-area">
+    <div class="cards-toolbar">
+      <span class="sort-label">Sort by:</span>
+      <select class="sort-select" id="sort-select">
+        <option value="date-desc">Date (newest first)</option>
+        <option value="date-asc">Date (oldest first)</option>
+        <option value="name">Official (A–Z)</option>
+      </select>
+    </div>
+    <div id="cards-container"></div>
+  </main>
+</div>
+
+<footer class="methodology">
+  <div class="methodology-inner">
+    <strong>Methodology:</strong> Statements are drawn from primary sources only: congressional transcripts, C-SPAN, official press releases, White House records, and contemporaneously documented news transcripts with verifiable audio/video.
+    Evidentiary status reflects peer-reviewed research, government audit findings, and nonpartisan fact-checker consensus (PolitiFact, AP Fact Check, FactCheck.org).
+    <strong>Note on mail voting:</strong> Academic evidence consistently finds that mail voting modestly increases turnout but does not produce a durable partisan advantage for either party. Claims to the contrary are marked accordingly.
+    <strong>Note on noncitizen voting:</strong> Documented instances are vanishingly rare. Utah's 2025 statewide audit of 2 million voters found one confirmed noncitizen registration and zero confirmed noncitizen votes. A Brennan Center survey of 44 jurisdictions after 2016 found roughly 30 noncitizen ballots among 23.5 million votes cast (0.0001%).
+    · <strong>AI Fact-Check</strong> uses Claude claude-sonnet-4-6; responses are a research aid, not legal or journalistic determination. Always verify primary sources independently.
+  </div>
+</footer>
+
+<script>
+const STATEMENTS = [
+  // ── 2018 ──
+  {
+    id: 1,
+    official: "Stacey Abrams",
+    title: "Georgia Democratic Gubernatorial Candidate",
+    party: "D", date: "2018-11-16", year: "2018",
+    quote: "I acknowledge that former Secretary of State Brian Kemp will be certified as the victor in the 2018 gubernatorial election. But to watch an elected official — who claims to represent the people of Georgia — baldly pin his hopes for election on the suppression of the people's democratic right to vote has been truly appalling.",
+    source: "Public concession statement, November 16, 2018",
+    sourceUrl: "https://staceyabrams.com/",
+    topics: ["turnout","integrity"],
+    status: "mixed",
+    note: "Documented voter roll purges and long lines in minority precincts occurred under Kemp's tenure as Secretary of State. Courts and the ACLU found some practices problematic. Kemp's victory was confirmed by Georgia's bipartisan election board. The claim of deliberate suppression is disputed; administrative and legal evidence supports some but not all of Abrams's characterization."
+  },
+  // ── 2020 ──
+  {
+    id: 2,
+    official: "Donald Trump",
+    title: "President of the United States (R-NY)",
+    party: "R", date: "2020-04-08", year: "2020",
+    quote: "Republicans should fight very hard when it comes to state wide mail-in voting. Democrats are trying to Extend the Voting Deadline. Don't do it! This will lead to the end of our great Republican Party. Will never be trusted again.",
+    source: "Twitter (@realDonaldTrump), April 8, 2020 (archived via UCSB Presidency Project)",
+    sourceUrl: "https://www.presidency.ucsb.edu/",
+    topics: ["mail-voting","fraud"],
+    status: "disputed",
+    note: "The claim that mail voting ends the Republican Party is contradicted by subsequent academic evidence. Stanford/MIT studies find no consistent partisan advantage from mail voting. Republicans successfully expanded mail-in voting operations in 2022 and 2024."
+  },
+  {
+    id: 3,
+    official: "Donald Trump",
+    title: "President of the United States (R-NY)",
+    party: "R", date: "2020-08-03", year: "2020",
+    quote: "Even if you weren't concerned about the drop boxes in the ballot harvesting in the mail-in ballots and 2020, you definitely should be concerned that illegal aliens might be voting in 2024.",
+    source: "SAVE Act press conference, U.S. Capitol steps, May 8, 2024 (Newsweek / NBC News)",
+    sourceUrl: "https://www.nbcnews.com/politics/congress/speaker-johnson-trump-allies-tried-overturn-2020-election-roll-new-vot-rcna151256",
+    topics: ["mail-voting","fraud","noncitizen"],
+    status: "disputed",
+    note: "No court or audit found evidence of systemic ballot harvesting fraud in 2020 affecting election outcomes. Over 60 post-election lawsuits were dismissed. CISA, Trump's own election securi
